@@ -24,7 +24,6 @@ exports.postCrearCiudad = async (req, res) => {
     //const ciudad = new Ciudad(req.body)
     //ciudad._id = mongoose.Types.ObjectId()
         Ciudad.find(req.body, function (err, result) {
-            console.log(typeof result)
             if (result.length == 0) {
                 const ciudad = new Ciudad(req.body)
                 ciudad._id = mongoose.Types.ObjectId()
@@ -40,15 +39,21 @@ exports.postCrearCiudad = async (req, res) => {
                 }
             }
             else {
-                console.log(req.body.ciudad)
-                Ciudad.updateOne({
-                    ciudad: req.body.ciudad,
-                    pais: req.body.pais}, {
-                        $inc: {hotSpot : 1 }
-                    })
+
+                const qCiudad = req.body.ciudad
+                const qPais = req.body.pais
+                const qDec = req.body.descripcion
+                console.log(qCiudad, qPais, qDec)
+                console.log(result)
+                Ciudad.update({ciudad: req.body.ciudad, pais: req.body.pais, descripcion: req.body.descripcion}, {
+                    $set: {hotSpot : result[0].hotSpot + 1 }
+                }).then(()=>{
+                    res.send({ operacion: "interes +1" })
+                }).catch(err=>console.log(err))
+
                 console.log('Entontre el valor, sumando al valor de interes.')
 
-                res.send({ operacion: "interes +1" })
+
             }
         })
     }
@@ -77,6 +82,18 @@ exports.deleteCiudad = async (req, res) => {
         await Ciudad.findIdAndRemove(req.body)
         console.log("ciudad borrada")
     } catch (err) {
+        console.log(err)
+        res.send({ operacion: "error" })
+    }
+}
+
+
+exports.getPaises = async (req, res)=>{
+    try{
+        const result = await Ciudad.find(req.body)
+        console.log(result)
+        res.send(result)
+    }catch(err){
         console.log(err)
         res.send({ operacion: "error" })
     }

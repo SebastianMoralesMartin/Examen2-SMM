@@ -5,5 +5,6 @@ router.post('/crearCiudad', ciudadController.postCrearCiudad)
 router.get('/getCiudad', ciudadController.getCiudad)
 router.post('/updateCiudad', ciudadController.updateCiudad)
 router.post('/borrarCiudad', ciudadController.deleteCiudad)
+router.post('/getPais', ciudadController.getPaises)
 
 module.exports = router

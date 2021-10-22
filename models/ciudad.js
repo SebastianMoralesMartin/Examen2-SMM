@@ -17,7 +17,7 @@ const CiudadSchema = mongoose.Schema({
     },
     hotSpot:{
         type:Number,
-        default:    0}
+        default: 1}
 }, {collection: "ciudad"})
 
 // Crear el modelo
