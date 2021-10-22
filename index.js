@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const ciudadRoutes = require('./routes/ciudad')
 const app = express()
-
+//
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use('/examen2', ciudadRoutes)
